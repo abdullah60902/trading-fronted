@@ -91,7 +91,7 @@ export default function NotificationsCenter() {
           {getUnreadCount() > 0 && (
             <button
               onClick={() => markAllReadMutation.mutate()}
-              disabled={markAllReadMutation.isLoading}
+              disabled={markAllReadMutation.isPending}
               className="flex items-center space-x-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700/50 rounded-lg text-xs font-bold text-slate-300 hover:text-slate-100 transition-colors disabled:opacity-50"
             >
               <Check className="w-4 h-4 text-cyan-400" />

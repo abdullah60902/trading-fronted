@@ -92,7 +92,7 @@ export default function AdminNotificationsPage() {
             {getUnreadCount() > 0 && (
               <button
                 onClick={() => markAllReadMutation.mutate()}
-                disabled={markAllReadMutation.isLoading}
+                disabled={markAllReadMutation.isPending}
                 className="inline-flex items-center gap-2 rounded-2xl border border-slate-700 bg-slate-900 px-4 py-2 text-xs font-semibold text-slate-200 hover:border-cyan-500 hover:text-cyan-300 disabled:opacity-60"
               >
                 <Check className="w-4 h-4" />
