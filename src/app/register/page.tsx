@@ -43,7 +43,7 @@ function RegisterForm() {
         body: JSON.stringify(formData),
       });
       // Redirect to login on success, they will need to verify email/phone
-      router.push('/login?message=Registration successful. You can now log in.');
+      router.push('/login?message=Registration successful. Please check your email to verify your account.');
     } catch (err: any) {
       // Show detailed validation errors if available
       if (err.details && Array.isArray(err.details)) {
