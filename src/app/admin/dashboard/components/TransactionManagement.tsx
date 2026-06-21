@@ -11,15 +11,17 @@ export default function TransactionManagement() {
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['admin_transactions', page, type],
+    queryKey: ['admin_transactions', type],
     queryFn: async () => {
-      return apiRequest(`/admin/transactions?page=${page}&limit=10&type=${type}`);
+      const endpoint = type === 'deposit' ? '/wallets/deposits' : '/wallets/withdrawals';
+      return apiRequest(endpoint);
     },
   });
 
   const processMutation = useMutation({
     mutationFn: async ({ id, action }: { id: string; action: 'approve' | 'reject' }) => {
-      return apiRequest(`/admin/transactions/${id}/process`, {
+      const endpoint = type === 'deposit' ? `/wallets/deposits/${id}/action` : `/wallets/withdrawals/${id}/action`;
+      return apiRequest(endpoint, {
         method: 'POST',
         body: JSON.stringify({ action }),
       });
@@ -31,8 +33,8 @@ export default function TransactionManagement() {
 
   if (isLoading) return <div className="p-8 text-slate-500 animate-pulse">Loading transactions...</div>;
 
-  const transactions = data?.transactions || [];
-  const totalPages = data?.totalPages || 1;
+  const transactions = data?.requests || [];
+  const totalPages = 1;
 
   return (
     <div className="space-y-6">
