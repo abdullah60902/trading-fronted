@@ -3,7 +3,7 @@
 import React, { useState, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { apiRequest } from '../../../lib/api';
-import { ShieldAlert, Mail, Lock, ArrowRight } from 'lucide-react';
+import { ShieldAlert, Mail, Lock, ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../../store/authSlice';
 
@@ -14,6 +14,7 @@ function AdminLoginForm() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -75,14 +76,21 @@ function AdminLoginForm() {
         <div className="relative">
           <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             placeholder="Admin Password"
             required
             value={formData.password}
             onChange={handleChange}
-            className="w-full bg-slate-950/50 border border-slate-800 rounded-lg py-3 pl-10 pr-4 text-sm text-slate-200 focus:outline-none focus:border-rose-500/50 transition-colors"
+            className="w-full bg-slate-950/50 border border-slate-800 rounded-lg py-3 pl-10 pr-10 text-sm text-slate-200 focus:outline-none focus:border-rose-500/50 transition-colors"
           />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-rose-500 transition-colors"
+          >
+            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+          </button>
         </div>
 
         <button

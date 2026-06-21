@@ -4,7 +4,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { apiRequest } from '../../lib/api';
 import Link from 'next/link';
-import { Mail, Lock, User, Phone, ArrowRight, ShieldCheck, Share2 } from 'lucide-react';
+import { Mail, Lock, User, Phone, ArrowRight, ShieldCheck, Share2, Eye, EyeOff } from 'lucide-react';
 
 function RegisterForm() {
   const router = useRouter();
@@ -21,6 +21,7 @@ function RegisterForm() {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (refCode) {
@@ -130,14 +131,21 @@ function RegisterForm() {
           <div className="relative">
             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
               required
               value={formData.password}
               onChange={handleChange}
-              className="w-full bg-slate-950/50 border border-slate-800 rounded-lg py-3 pl-10 pr-4 text-sm text-slate-200 focus:outline-none focus:border-cyan-500/50 transition-colors"
+              className="w-full bg-slate-950/50 border border-slate-800 rounded-lg py-3 pl-10 pr-10 text-sm text-slate-200 focus:outline-none focus:border-cyan-500/50 transition-colors"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-cyan-400 transition-colors"
+            >
+              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            </button>
           </div>
           <p className="text-xs text-slate-500 -mt-2 pl-1">
             Password must be 8+ chars with uppercase, lowercase, number &amp; special character (e.g. <span className="text-cyan-500">Test@1234</span>)

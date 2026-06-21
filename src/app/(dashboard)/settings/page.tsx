@@ -37,6 +37,7 @@ export default function SettingsPage() {
   // ── Change Password State ──
   const [showOldPw, setShowOldPw] = useState(false);
   const [showNewPw, setShowNewPw] = useState(false);
+  const [showConfirmPw, setShowConfirmPw] = useState(false);
   const [pwForm, setPwForm] = useState({ oldPassword: '', newPassword: '', confirmPassword: '' });
   const [pwMsg, setPwMsg] = useState({ text: '', type: '' as 'success' | 'error' | '' });
 
@@ -448,15 +449,24 @@ export default function SettingsPage() {
                 {/* Confirm New Password */}
                 <div>
                   <label className="text-xs text-slate-400 font-semibold mb-1 block">Confirm New Password</label>
-                  <input
-                    type="password"
-                    required
-                    minLength={8}
-                    value={pwForm.confirmPassword}
-                    onChange={(e) => setPwForm({ ...pwForm, confirmPassword: e.target.value })}
-                    placeholder="Re-enter new password"
-                    className="w-full bg-slate-950/50 border border-slate-800 rounded-lg p-3 text-sm text-slate-100 focus:outline-none focus:border-cyan-500 transition-colors"
-                  />
+                  <div className="relative">
+                    <input
+                      type={showConfirmPw ? 'text' : 'password'}
+                      required
+                      minLength={8}
+                      value={pwForm.confirmPassword}
+                      onChange={(e) => setPwForm({ ...pwForm, confirmPassword: e.target.value })}
+                      placeholder="Re-enter new password"
+                      className="w-full bg-slate-950/50 border border-slate-800 rounded-lg p-3 text-sm text-slate-100 pr-10 focus:outline-none focus:border-cyan-500 transition-colors"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPw(!showConfirmPw)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"
+                    >
+                      {showConfirmPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>
                 </div>
 
                 {pwMsg.text && (
