@@ -66,8 +66,8 @@ export default function PriceChart({ liveRates, coinsData }: { liveRates?: Recor
   }, [currentPrice]);
 
   return (
-    <div className="glass-panel p-6">
-      <div className="flex justify-between items-start mb-6">
+    <div className="glass-panel p-4 sm:p-6">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <div>
           <div className="flex items-center space-x-2 mb-2">
             {availableCoins.map(c => (

@@ -2,10 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { Bell, Check, X } from 'lucide-react';
+import { Bell, Check, X, Menu } from 'lucide-react';
 import { apiRequest } from '../lib/api';
 import Link from 'next/link';
-import { useAppSelector } from '../store/hooks';
+import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { toggleSidebar } from '../store/uiSlice';
 
 interface NotificationItem {
   _id: string;
@@ -17,6 +18,7 @@ interface NotificationItem {
 }
 
 export default function Navbar({ title }: { title: string }) {
+  const dispatch = useAppDispatch();
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const currentRole = useAppSelector((state) => state.auth.user?.role);
   const pathname = usePathname();
@@ -69,9 +71,18 @@ export default function Navbar({ title }: { title: string }) {
 
   return (
     <header className="h-20 bg-slate-900/30 border-b border-slate-800 flex items-center justify-between px-4 sm:px-6 lg:px-8 fixed top-0 right-0 left-0 lg:left-64 z-20 backdrop-blur-md">
-      <h1 className="text-lg sm:text-xl font-bold text-slate-100 glow-text-cyan capitalize truncate max-w-[60vw] sm:max-w-[75vw] md:max-w-[85vw]">
-        {title}
-      </h1>
+      <div className="flex items-center gap-3">
+        {/* Mobile Hamburger Toggle */}
+        <button 
+          onClick={() => dispatch(toggleSidebar())}
+          className="p-2 -ml-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 lg:hidden transition-colors"
+        >
+          <Menu className="h-6 w-6" />
+        </button>
+        <h1 className="text-lg sm:text-xl font-bold text-slate-100 glow-text-cyan capitalize truncate max-w-[50vw] sm:max-w-[70vw] md:max-w-[80vw]">
+          {title}
+        </h1>
+      </div>
 
       <div className="relative">
         <button

@@ -266,7 +266,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[url('/bg-pattern.svg')] bg-cover bg-center">
+    <div className="min-h-screen px-4 flex items-center justify-center bg-[url('/bg-pattern.svg')] bg-cover bg-center">
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/20 rounded-full blur-[120px] pointer-events-none" />
       <Suspense fallback={<div className="text-white">Loading...</div>}>
         <LoginForm />

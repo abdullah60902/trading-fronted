@@ -61,8 +61,14 @@ export default function Sidebar() {
     { name: 'Settings & 2FA', path: '/settings', icon: Settings },
   ];
 
+  const isSidebarOpen = useAppSelector((state) => state.ui.isSidebarOpen);
+
   return (
-    <aside className="w-64 bg-slate-900/60 border-r border-slate-800 flex flex-col h-screen fixed left-0 top-0 z-30 backdrop-blur-md">
+    <aside 
+      className={`w-64 bg-slate-900/90 lg:bg-slate-900/60 border-r border-slate-800 flex flex-col h-screen fixed left-0 top-0 z-30 backdrop-blur-md transition-transform duration-300 ease-in-out ${
+        isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+      }`}
+    >
       {/* Brand Header */}
       <div className="h-20 flex items-center px-6 border-b border-slate-800">
         <Link href="/dashboard" className="flex items-center space-x-2">
