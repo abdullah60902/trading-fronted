@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "../components/Providers";
 
+// Deployment: 2026-06-23 07:10 - Force rebuild with Render backend
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
