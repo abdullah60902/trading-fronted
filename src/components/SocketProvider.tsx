@@ -75,7 +75,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
     })() : null;
     if (!token) return;
 
-    const socketInstance = io(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000', {
+    const socketInstance = io('https://trading-backend-x8fe.onrender.com', {
       auth: { token },
       withCredentials: true,
       transports: ['websocket', 'polling'],

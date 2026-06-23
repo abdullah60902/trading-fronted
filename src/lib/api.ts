@@ -1,7 +1,8 @@
 import { store } from '../store/store';
 import { setCredentials, setAccessToken, clearCredentials } from '../store/authSlice';
 
-const BASE_URL = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000') + '/api/v1';
+// Hardcoded backend URL - pointing to Render production backend
+const BASE_URL = 'https://trading-backend-x8fe.onrender.com/api/v1';
 
 let cachedCsrfToken: string | null = null;
 let csrfFetchPromise: Promise<string> | null = null;
