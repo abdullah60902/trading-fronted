@@ -1,4 +1,5 @@
 "use client";
+// Deployment: 2026-06-23 - Updated environment variables for production
 
 import React, { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
