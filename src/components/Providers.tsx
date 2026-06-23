@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { store } from '../store/store';
 import { SocketProvider } from './SocketProvider';
 import { useAppDispatch } from '../store/hooks';
-import { apiRequest } from '../lib/api';
+import { apiRequest, initializeCsrfToken } from '../lib/api';
 import { clearCredentials, setCredentials, setUser } from '../store/authSlice';
 
 const AUTH_STORAGE_KEY = 'authState';
@@ -47,6 +47,9 @@ function AuthLoader({ children }: { children: React.ReactNode }) {
     ]);
 
     const initAuth = async () => {
+      // Initialize CSRF token first
+      await initializeCsrfToken();
+      
       const stored = loadStoredAuth();
       if (stored?.user && stored?.accessToken) {
         dispatch(setCredentials({ user: stored.user, accessToken: stored.accessToken }));

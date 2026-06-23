@@ -29,11 +29,16 @@ export const fetchCsrfToken = async (): Promise<string> => {
         method: 'GET',
         credentials: 'include', // Required so cookie is set in browser
       });
+      if (!res.ok) {
+        console.error('[CSRF] Token fetch failed with status:', res.status);
+        return '';
+      }
       const data = await res.json();
       cachedCsrfToken = data.csrfToken;
+      console.log('[CSRF] Token fetched and cached successfully');
       return cachedCsrfToken || '';
     } catch (error) {
-      console.error('Failed to fetch CSRF token:', error);
+      console.error('[CSRF] Token fetch error:', error);
       return '';
     } finally {
       csrfFetchPromise = null;
@@ -42,8 +47,20 @@ export const fetchCsrfToken = async (): Promise<string> => {
   return csrfFetchPromise;
 };
 
+// Pre-fetch CSRF token immediately on app initialization
+export const initializeCsrfToken = async (): Promise<void> => {
+  try {
+    await fetchCsrfToken();
+  } catch (error) {
+    console.warn('[CSRF] Initial fetch failed (non-critical):', error);
+  }
+};
+
 // Call on logout to clear cached token
-export const clearCsrfToken = () => { cachedCsrfToken = null; };
+export const clearCsrfToken = () => { 
+  cachedCsrfToken = null;
+  console.log('[CSRF] Token cleared');
+};
 
 // Core Request Wrapper
 export const apiRequest = async (
@@ -66,6 +83,9 @@ export const apiRequest = async (
     const csrfToken = await fetchCsrfToken();
     if (csrfToken) {
       headers.set('X-CSRF-Token', csrfToken);
+      console.log('[CSRF] Token attached to request:', method, endpoint);
+    } else {
+      console.warn('[CSRF] No token available for', method, endpoint);
     }
   }
 
